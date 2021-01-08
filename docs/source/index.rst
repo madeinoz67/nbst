@@ -5,7 +5,7 @@
 nbst
 ====
 
-Netbox sSync Tool
+Netbox Sync Tool
 
 .. toctree::
    :maxdepth: 2

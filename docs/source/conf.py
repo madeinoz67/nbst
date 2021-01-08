@@ -80,7 +80,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "nbst"
-copyright = "2019, madeinoz67"
+copyright = "2021, madeinoz67"
 author = "Stephen Eaton"
 
 # The version info for the project you're documenting, acts as replacement for
