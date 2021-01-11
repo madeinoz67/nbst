@@ -1,10 +1,13 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
-Netbox Sync Tool
+nbst - Netbox Sync Tool
 
 .. currentmodule:: nbst
 .. moduleauthor:: Stephen Eaton <seaton@strobotics.com.au>
 """
-from .version import __release__  # noqa: F401
-from .version import __version__  # noqa: F401
+from ._version import (
+    __version__,
+)
+
+__all__ = [
+    "__version__",
+]
