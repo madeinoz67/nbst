@@ -1,0 +1,23 @@
+- common:
+      log_level: INFO
+
+- netbox:
+      api_token: ABC
+      host_fqdn: netbox.example.com
+      validate_tls_certs: True
+      prune_enabled: True
+      prune_delay_in_days: 30
+
+- sources:
+      - nutanix_prism:
+            host_fqdn: prismcentral.example.com
+            port: 996
+            username: apiuser
+            password: secretpassword
+            permitted_subnets:
+                - 172.16.0.0/12
+                - 10.0.0.0/8
+                - 192.168.0.0/16
+                - fd00::/8
+            dns_name_lookup: True
+            collect_hardware_asset_tag: True

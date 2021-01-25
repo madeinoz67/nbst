@@ -5,6 +5,14 @@ name = "pypi"
 
 [packages]
 click = "*"
+attr = "*"
+punq = "*"
+aiodns = "*"
+pyyaml = "*"
+"ruamel.yaml" = "*"
+loguru = "*"
+click-help-colors = "*"
+click-configfile = "*"
 
 [dev-packages]
 pip-check-reqs = "*"
