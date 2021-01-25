@@ -121,9 +121,3 @@ def cli(info: Info, verbose: int):
         logger.remove()
 
     info.verbose = verbose
-
-
-# @cli.command()
-# def version():
-#     """Get the library version."""
-#     click.echo(click.style(f"{__version__}", bold=True))
