@@ -13,6 +13,8 @@ pyyaml = "*"
 loguru = "*"
 click-help-colors = "*"
 click-configfile = "*"
+python-netbox = "*"
+marshmallow = "*"
 
 [dev-packages]
 pip-check-reqs = "*"
