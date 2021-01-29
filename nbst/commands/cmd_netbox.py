@@ -43,11 +43,7 @@ def cli(ctx, host, apikey, use_ssl):
     flag_value=True,
     help="Removes orphaned NetBox objects",
 )
-@click.option(
-    "--prism",
-    default=False,
-    help="Prism Host name",
-)
+@click.option("--prism", default=False, help="Prism Host name")
 @click.argument("prism_hostname", type=str, metavar="<prism>")
 @pass_info
 def sync(ctx, netbox_hostname, prism_hostname, dryrun, prune=False):
@@ -75,7 +71,30 @@ def list_vms(ctx):
         vm_data = ctx.obj.netboxservice.get_vms()
 
         results = vm_schema.load(vm_data)
+        logger.debug(results)
+
+        stats = {"vcpu_total": 0, "mem_total": 0, "disk_total": 0}
+
+        click.echo(" ".center(int(14 * 5.5), "="))
+
+        click.echo(
+            f'{"Name":14} {"Status":8} {"vcpus":6} {"Memory-MB":6} {"disk-GB":6} {"cluster":20}'
+        )
+        click.echo(" ".center(int(14 * 5.5), "-"))
+        for vm in results:
+            stats["vcpu_total"] += vm.vcpus
+            stats["mem_total"] += vm.memory
+            stats["disk_total"] += vm.disk
+            click.echo(f"{vm.name:15}", nl=False)
+            if vm.status.label == "Active":
+                click.secho(f"{vm.status.label:8}", fg="green", nl=False)
+            else:
+                click.secho(f"{vm.status.label:8}", fg="yellow", nl=False)
+            click.echo(f"{vm.vcpus:6} {vm.memory:8} {vm.disk:8} {vm.cluster.name:20} ")
+        click.echo("\n")
+        click.echo(
+            f"Totals: CPUs:{stats['vcpu_total']:3} Memory-GB: {round(stats['mem_total']/1024,2):6} Disk-TB: {round(stats['disk_total']/1024,2):6} \n"
+        )
     except TypeError as e:
         logger.exception(f"{e.args}")
         exit(1)
-    logger.debug(results)

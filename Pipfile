@@ -15,6 +15,7 @@ click-help-colors = "*"
 click-configfile = "*"
 python-netbox = "*"
 marshmallow = "*"
+colorama = "*"
 
 [dev-packages]
 pip-check-reqs = "*"

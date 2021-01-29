@@ -199,7 +199,7 @@ class VirtualMachine:
     role = attr.ib()
     platform = attr.ib()
     primary_ip = attr.ib()
-    primary_ipv4 = attr.ib()
+    primary_ip4 = attr.ib()
     custom_fields = attr.ib()
     site = attr.ib()
     # config_context = attr.ib()
@@ -219,7 +219,7 @@ class VirtualMachineSchema(Schema):
     memory = fields.Int(validate=validate.Range(min=0, max=2147483647))
     disk = fields.Int(validate=validate.Range(min=0, max=2147483647))
     primary_ip = fields.Nested(IPSchema, allow_none=True)
-    primary_ipv4 = fields.Nested(IPv4Schema, allow_none=True)  # TODO: throwing error
+    primary_ip4 = fields.Nested(IPv4Schema, allow_none=True)
     custom_fields = fields.Nested(VmCustomFieldsSchema)
     tags = fields.List(fields.Str())
     # config_context = fields.Str() #TODO: not seeing as string

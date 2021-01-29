@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 This is the entry point for the command-line interface (CLI) application.
 
@@ -36,7 +35,7 @@ LOGGING_LEVELS = {
 }  #: a mapping of `verbose` option counts to logging levels
 
 
-class Info(object):
+class Info:
     """An information object to pass data between CLI functions."""
 
     def __init__(self):  # Note: This object must have an empty constructor.
@@ -72,8 +71,8 @@ class ComplexCLI(HelpColorsMultiCommand):
 
 @click.command(
     cls=ComplexCLI,
-    help_headers_color="yellow",
-    help_options_color="green",
+    help_headers_color="yellow",  # type: ignore
+    help_options_color="green",  # type: ignore
 )
 @click.option(
     "--verbose",

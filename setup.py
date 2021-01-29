@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 This file is used to create the package we'll publish to PyPI.
 
@@ -27,7 +26,7 @@ vspec = importlib.util.spec_from_file_location(
     "version", str(Path(__file__).resolve().parent / "nbst" / "version.py")
 )
 vmod = importlib.util.module_from_spec(vspec)
-vspec.loader.exec_module(vmod)
+vspec.loader.exec_module(vmod)  # type: ignore
 version = getattr(vmod, "__version__")
 
 # If the environment has a build number set...

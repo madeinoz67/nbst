@@ -80,7 +80,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "nbst"
-copyright = "2021, madeinoz67"
+copyright = "2021, Stephen Eaton"
 author = "Stephen Eaton"
 
 # The version info for the project you're documenting, acts as replacement for
@@ -106,7 +106,7 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = ["_build"]
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = "sphinx"
@@ -124,7 +124,12 @@ todo_include_todos = False
 # noqa
 # fmt: on
 html_theme = "sphinx_rtd_theme"
-html_theme_options = {}
+html_theme_options = {
+    "description": "Netbox Sync Tool",
+    "description_font_style": "italic",
+    "github_user": "madeinoz67",
+    "github_repo": "nbst",
+}
 # fmt: off
 # noqa
 # fmt: on
@@ -156,33 +161,33 @@ htmlhelp_basename = "nbstdoc"
 
 # -- Options for LaTeX output ---------------------------------------------
 
-latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    #
-    # 'papersize': 'letterpaper',
-    # The font size ('10pt', '11pt' or '12pt').
-    #
-    # 'pointsize': '10pt',
-    # Additional stuff for the LaTeX preamble.
-    #
-    # 'preamble': '',
-    # Latex figure (float) alignment
-    #
-    # 'figure_align': 'htbp',
-}
+# latex_elements = {
+#     # The paper size ('letterpaper' or 'a4paper').
+#     #
+#     # 'papersize': 'letterpaper',
+#     # The font size ('10pt', '11pt' or '12pt').
+#     #
+#     # 'pointsize': '10pt',
+#     # Additional stuff for the LaTeX preamble.
+#     #
+#     # 'preamble': '',
+#     # Latex figure (float) alignment
+#     #
+#     # 'figure_align': 'htbp',
+# }
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [
-    (
-        master_doc,
-        "nbst.tex",
-        "nbst Documentation",
-        "madeinoz67",
-        "manual",
-    )
-]
+# latex_documents = [
+#     (
+#         master_doc,
+#         "nbst.tex",
+#         "nbst Documentation",
+#         "madeinoz67",
+#         "manual",
+#     )
+# ]
 
 # -- Options for manual page output ---------------------------------------
 

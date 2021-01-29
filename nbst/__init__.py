@@ -1,7 +1,6 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
-Netbox Sync Tool
+nbst - Netbox Sync Tool
 
 .. currentmodule:: nbst
 .. moduleauthor:: Stephen Eaton <seaton@strobotics.com.au>
