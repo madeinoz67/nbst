@@ -24,6 +24,7 @@ import click
 from click_help_colors import HelpColorsMultiCommand
 from click_help_colors import version_option
 from loguru import logger
+from rich.console import Console
 
 from .__init__ import __version__
 
@@ -35,17 +36,19 @@ LOGGING_LEVELS = {
 }  #: a mapping of `verbose` option counts to logging levels
 
 
-class Info:
-    """An information object to pass data between CLI functions."""
+class AppContext:
+    """the Application context object to pass data between CLI functions."""
 
     def __init__(self):  # Note: This object must have an empty constructor.
         """Create a new instance."""
         self.verbose: int = 0
+        self.console = Console()
+        self.netboxservice = None
 
 
 # pass_info is a decorator for functions that pass 'Info' objects.
 #: pylint: disable=invalid-name
-pass_info = click.make_pass_decorator(Info, ensure=True)
+pass_info = click.make_pass_decorator(AppContext, ensure=True)
 
 
 class ComplexCLI(HelpColorsMultiCommand):
@@ -93,9 +96,11 @@ class ComplexCLI(HelpColorsMultiCommand):
       Platform: {platform.platform()}\n",
 )
 @pass_info
-def cli(info: Info, verbose: int):
+# @click.pass_context
+def cli(app_context: AppContext, verbose: int):
     """Welcome to NetBox Sync Tool."""
-
+    # appContext = AppContext
+    # ctx.obj = appContext
     # Use the verbosity count to determine the logging level...
     if verbose > 0:
         logger.configure(
@@ -119,4 +124,4 @@ def cli(info: Info, verbose: int):
     else:
         logger.remove()
 
-    info.verbose = verbose
+    app_context.verbose = verbose

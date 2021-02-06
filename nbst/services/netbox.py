@@ -9,7 +9,7 @@ class NetboxService:
     """Class representing the external Netbox host"""
 
     def __init__(self, host, api_key, use_ssl):
-        logger.debug(
+        logger.info(
             f"Initialising NetBox service, host={host}, api_key={api_key}, use_ssl={use_ssl}"
         )
         self.netboxapi = NetBox(
@@ -20,10 +20,10 @@ class NetboxService:
 
     def get_vms(self):
         """Gets the list of all virtual machines from NetBox"""
-        logger.debug("Getting list of VMs from NetBox API")
+        logger.info("Getting list of VMs from NetBox API")
         try:
             result = self.netboxapi.virtualization.get_virtual_machines()
-            logger.debug(f"Retrieved {len(result)} virtual machines")
+            logger.info(f"Retrieved {len(result)} virtual machines")
             return result
         except ConnectionError as e:
             logger.exception(f"{e.args}")

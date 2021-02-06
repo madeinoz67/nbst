@@ -16,6 +16,8 @@ click-configfile = "*"
 python-netbox = "*"
 marshmallow = "*"
 colorama = "*"
+jinja2 = "*"
+rich = "*"
 
 [dev-packages]
 pip-check-reqs = "*"

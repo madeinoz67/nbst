@@ -6,14 +6,14 @@ from marshmallow import fields
 from marshmallow import utils
 
 
-class IPNetwork(fields.Field):
-    """A IPNetwork field
+class IPInterface(fields.Field):
+    """A IP Interface field
 
     :parm bool exploded: If `True`, serialize ipv6 network address in long form, ie. with groups
         consisting entirely of zeros included.
     """
 
-    default_error_messages = {"invalid_ip_network": "Not a valid IP network."}
+    default_error_messages = {"invalid_ip_interface": "Not a valid IP interface."}
 
     DESERIALIZATION_CLASS = None  # type: typing.Optional[typing.Type]
 
@@ -36,25 +36,25 @@ class IPNetwork(fields.Field):
         if value is None:
             return None
         try:
-            logger.debug(f"deserialize : {value}")
+            logger.info(f"deserialize : {value}")
             return (self.DESERIALIZATION_CLASS or ipaddress.ip_interface)(
                 utils.ensure_text_type(value)
             )
         except (ValueError, TypeError) as error:
-            raise self.make_error("invalid_ip_network") from error
+            raise self.make_error("invalid_ip_interface") from error
 
 
-class IPv4Network(IPNetwork):
-    """A IPv4Network field"""
+class IPv4Interface(IPInterface):
+    """A IPv4 Interface field"""
 
-    default_error_messages = {"invalid_ip_network": "Not a valid IPv4 network."}
+    default_error_messages = {"invalid_ip_interface": "Not a valid IPv4 interface."}
 
     DESERIALIZATION_CLASS = ipaddress.IPv4Interface
 
 
-class IPv6Network(IPNetwork):
-    """A IPv6 Network address field."""
+class IPv6Network(IPInterface):
+    """A IPv6 Interface field."""
 
-    default_error_messages = {"invalid_ip_network": "Not a valid IPv6 network."}
+    default_error_messages = {"invalid_ip_interface": "Not a valid IPv6 interface."}
 
     DESERIALIZATION_CLASS = ipaddress.IPv6Interface

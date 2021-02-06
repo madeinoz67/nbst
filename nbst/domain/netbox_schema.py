@@ -4,8 +4,8 @@ from marshmallow import post_load
 from marshmallow import Schema
 from marshmallow import validate
 
-from nbst.domain.network_field import IPNetwork
-from nbst.domain.network_field import IPv4Network
+from nbst.domain.network_field import IPInterface
+from nbst.domain.network_field import IPv4Interface
 
 
 @attr.s
@@ -64,41 +64,41 @@ class ClusterSchema(Schema):
 
 
 @attr.s
-class IPAddress:
+class PrimaryIPInterface:
     id = attr.ib()
     family = attr.ib()
     address = attr.ib()
     url = attr.ib()
 
 
-class IPSchema(Schema):
+class PrimaryIPSchema(Schema):
     id = fields.Int()
     family = fields.Int()
     url = fields.URL()
-    address = IPNetwork(required=True)
+    address = IPInterface(required=True)
 
     @post_load
     def make_ip(self, data, **kwargs):
-        return IPAddress(**data)
+        return PrimaryIPInterface(**data)
 
 
 @attr.s
-class IPv4Address:
+class PrimaryIPv4Interface:
     id = attr.ib()
     family = attr.ib()
     address = attr.ib()
     url = attr.ib()
 
 
-class IPv4Schema(Schema):
+class PrimaryIPv4InterfaceSchema(Schema):
     id = fields.Int()
     family = fields.Int()
     url = fields.URL()
-    address = IPv4Network(required=True)
+    address = IPv4Interface(required=True)
 
     @post_load
     def make_ipv4(self, data, **kwargs):
-        return IPv4Address(**data)
+        return IPv4Interface(**data)
 
 
 @attr.s
@@ -218,8 +218,8 @@ class VirtualMachineSchema(Schema):
     vcpus = fields.Int(validate=validate.Range(min=0, max=32767))
     memory = fields.Int(validate=validate.Range(min=0, max=2147483647))
     disk = fields.Int(validate=validate.Range(min=0, max=2147483647))
-    primary_ip = fields.Nested(IPSchema, allow_none=True)
-    primary_ip4 = fields.Nested(IPv4Schema, allow_none=True)
+    primary_ip = fields.Nested(PrimaryIPSchema, allow_none=True)
+    primary_ip4 = fields.Nested(PrimaryIPv4InterfaceSchema, allow_none=True)
     custom_fields = fields.Nested(VmCustomFieldsSchema)
     tags = fields.List(fields.Str())
     # config_context = fields.Str() #TODO: not seeing as string
