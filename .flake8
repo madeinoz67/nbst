@@ -6,5 +6,5 @@ ignore =
     F631, # Assertion is always true in test_example.py
 max-line-length = 160
 exclude =
-    venv,
+    .venv,
     setup.py

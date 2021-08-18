@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
 .. currentmodule:: test_cli
 .. moduleauthor:: Stephen Eaton <seaton@strobotics.com.au>
@@ -26,32 +25,45 @@ def test_version_displays_library_version():
     Assert: The output matches the library version.
     """
     runner: CliRunner = CliRunner()
-    result: Result = runner.invoke(cli.cli, ["version"])
+    result: Result = runner.invoke(cli.cli, ["--version"])
     assert (
         __version__ in result.output.strip()
     ), "Version number should match library version."
 
 
-def test_verbose_output():
+def test_version_output():
     """
-    Arrange/Act: Run the `version` subcommand with the '-v' flag.
-    Assert: The output indicates verbose logging is enabled.
+    Arrange/Act: Run the `version`.
+    Assert: The output indicates Python Version.
     """
     runner: CliRunner = CliRunner()
-    result: Result = runner.invoke(cli.cli, ["-v", "version"])
+    result: Result = runner.invoke(cli.cli, ["--version"])
     assert (
-        "Verbose" in result.output.strip()
-    ), "Verbose logging should be indicated in output."
+        "Python" in result.output.strip()
+    ), "Python Version should be indicated in output."
 
 
-def test_hello_displays_expected_message():
+def test_version_displays_expected_name():
     """
     Arrange/Act: Run the `version` subcommand.
-    Assert:  The output matches the library version.
+    Assert:  The output matches the library name.
     """
     runner: CliRunner = CliRunner()
-    result: Result = runner.invoke(cli.cli, ["hello"])
+    result: Result = runner.invoke(cli.cli, ["--version"])
     # fmt: off
     assert 'nbst' in result.output.strip(), \
-        "'Hello' messages should contain the CLI name."
+        "Version messages should contain the CLI name."
+    # fmt: on
+
+
+def test_netbox_command():
+    """
+    Arrange/Act: Run the `netbox` command.
+    Assert:  if netbox command is not found in the output.
+    """
+    runner: CliRunner = CliRunner()
+    result: Result = runner.invoke(cli.cli, ["netbox"])
+    # fmt: off
+    assert "Error: No such command 'netbox'" not in result.output.strip(), \
+        "'netbox' command is not found."
     # fmt: on

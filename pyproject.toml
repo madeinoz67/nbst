@@ -1,3 +1,102 @@
+[tool.poetry]
+name = "nbst"
+version = "0.0.1"
+description = "Netbox Sync Tool"
+authors = ["Stephen Eaton <seaton@strobotics.com.au>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/madeinoz67/nbst"
+keywords = ["nutanix", "netbox", "sync"]
+classifiers = [
+    "Environment :: Console",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Utilities"
+]
+
+include=[
+    "LICENSE",
+]
+
+[tool.poetry.scripts]
+nbst = "nbst.cli:cli"
+
+
+[tool.poetry.dependencies]
+python = ">=3.7, ^3.9"
+click = "^8.0.1"
+attr = "^0.3.1"
+punq = "^0.4.1"
+aiodns = "^3.0.0"
+pydantic = "^1.8.2"
+loguru = "^0.5.3"
+click-help-colors = "^0.9.1"
+python-netbox = "^0.0.21"
+colorama = "^0.4.4"
+Jinja2 = "^3.0.1"
+rich = "^10.6.0"
+importlib-metadata = "^4.6.1"
+marshmallow = "^3.12.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+pytest-cov = "^2.12.1"
+pytest-pythonpath = "^0.7.3"
+flake8 = "^3.9.2"
+tox = "^3.24.0"
+twine = "^3.4.1"
+black = "^21.7b0"
+bandit = "^1.7.0"
+mkdocs-material = "^7.1.11"
+mkdocs-macros-plugin = "^0.5.12"
+Faker = "^8.10.1"
+isort = "^5.9.2"
+factory-boy = "^3.2.0"
+pytest-factoryboy = "^2.1.0"
+
+[tool.isort]
+profile = "black"
+src_paths = ["app", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+filterwarnings = "error"
+addopts = '''
+  --strict-markers
+  --tb=short
+  --cov=app
+  --cov=tests
+  --cov-branch
+  --cov-report=term-missing
+  --cov-report=html
+  --cov-report=xml
+  --no-cov-on-fail
+  --cov-fail-under=30
+'''
+env = ["SECRET_KEY=secret"]
+markers = [
+    'slow: slow running test'
+]
+python_files = 'test_*.py'
+
+[tool.coverage.run]
+# Activating branch coverage is super important
+branch = true
+omit = [
+  # add your files to omit here
+    ]
+
+[tool.pydocstyle]
+ignore = ["D104","D406"]
+convention="pep257"
+
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta:__legacy__"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

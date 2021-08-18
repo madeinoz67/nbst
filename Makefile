@@ -1,73 +1,39 @@
-.DEFAULT_GOAL := build
-.PHONY: build publish package coverage test lint docs venv
-PROJ_SLUG = nbst
-CLI_NAME = nbst
-PY_VERSION = 3.8
-LINTER = flake8
+SHELL := bash
+.ONESHELL:
+.SHELLFLAGS := -eu -o pipefail -c
+.DELETE_ON_ERROR:
+MAKEFLAGS += --warn-undefined-variables
+MAKEFLAGS += --no-builtin-rules
+.DEFAULT_GOAL := help
 
+install:  ## install all dependencies locally
+	poetry install
+.PHONY: install
 
+update:  ## update project dependencies locally (run after git update)
+	poetry update
+.PHONY: update
 
-build:
+ci: lint bandit test ## Run all checks (lint, bandit, test)
+.PHONY: ci
 
-	pipenv install --dev -e .
+test:  ## Run tests
+	poetry run pytest . --no-cov
+.PHONY: test
 
+lint:  ## Run linting with flake8
+	poetry run flake8 . \
+	--count \
+	--ignore=F841,W503 \
+	--max-complexity=26 \
+	--max-line-length=88 \
+	--statistics \
+	--exclude .venv
+.PHONY: lint
 
-run:
-	$(CLI_NAME) run
+bandit:  ## Run static security analysis with bandit
+	poetry run bandit nbst -r
+.PHONY: bandit
 
-submit:
-	$(CLI_NAME) submit
-
-freeze:
-
-	pipenv lock -r > requirements.txt
-
-lint:
-	$(LINTER) $(PROJ_SLUG)
-
-test: lint
-	py.test --cov-report term --cov=$(PROJ_SLUG) tests/
-
-quicktest:
-	py.test --cov-report term --cov=$(PROJ_SLUG) tests/
-
-coverage: lint
-	py.test --cov-report html --cov=$(PROJ_SLUG) tests/
-
-docs: coverage
-	mkdir -p docs/source/_static
-	mkdir -p docs/source/_templates
-	cd docs && $(MAKE) html
-
-
-answers:
-	cd docs && $(MAKE) html
-	xdg-open docs/build/html/index.html
-
-package: clean docs
-	python setup.py sdist
-
-publish: package
-	twine upload dist/*
-
-clean :
-	rm -rf dist \
-	rm -rf docs/build \
-	rm -rf *.egg-info
-	coverage erase
-
-venv :
-
-	pipenv shell
-
-
-
-
-install:
-
-	pipenv install --dev
-
-
-licenses:
-	pip-licenses --with-url --format=rst \
-	--ignore-packages $(shell cat .pip-lic-ignore | awk '{$$1=$$1};1')
+help: Makefile
+	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
